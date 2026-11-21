@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WANTED - IDPY (I DON'T PROUD OF YOU)</title>
+    <style>
+        /* 整體網頁背景：模擬官方檔案的深灰底色，突出中間的白紙海報 */
+        body {
+            background-color: #1c1c1c;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 30px 15px 260px 15px;
+            display: flex;
+            justify-content: center;
+            color: #111111;
+        }
+
+        /* 海報主容器 */
+        .poster-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 880px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75);
+            border: 1px solid #cccccc;
+            overflow: hidden;
+        }
+
+        /* 頂部紅色橫幅 */
+        .header-banner {
+            background-color: #c8102e;
+            color: #ffffff;
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        /* 頂部兩個 Logo 放大至 130px */
+        .badge-img {
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .header-text {
+            flex-grow: 1;
+            padding: 0 18px;
+        }
+
+        .wanted-title {
+            font-family: Impact, "Arial Black", sans-serif;
+            font-size: 84px;
+            line-height: 0.95;
+            letter-spacing: 3px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .sub-banner {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        /* 內容區域 */
+        .content-body {
+            padding: 30px 45px 35px 45px;
+        }
+
+        /* 首頁黑色剪影框 */
+        .silhouette-box {
+            width: 260px;
+            height: 310px;
+            margin: 0 auto 25px auto;
+            border: 2px solid #222222;
+            background-color: #f4f4f4;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .silhouette-box:hover {
+            transform: scale(1.02);
+        }
+
+        .silhouette-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 紅色可點擊分頁按鈕 */
+        .red-nav-btn {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            background: none;
+            border: none;
+            color: #c8102e;
+            font-family: inherit;
+            font-size: 21px;
+            font-weight: 900;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 26px 0 10px 0;
+            padding: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+        }
+
+        .red-nav-btn:hover {
+            background-color: #fdf0f2;
+            color: #8a081d;
+            transform: scale(1.02);
+        }
+
+        .click-hint {
+            font-size: 11px;
+            color: #777;
+            text-align: center;
+            margin-top: -8px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* 黑色內文描述 */
+        .description-text {
+            font-size: 15px;
+            line-height: 1.65;
+            text-align: justify;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .quote-highlight {
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        /* 首頁底部呼籲欄 */
+        .footer-banner {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 2px solid #111;
+            text-align: center;
+            font-weight: 900;
+            font-size: 18px;
+            line-height: 1.4;
+            text-transform: uppercase;
+        }
+
+        .footer-red {
+            color: #c8102e;
+        }
+
+        /* 每頁最下方共用的雙 Logo 底部欄 */
+        .global-bottom-logos {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 45px 28px 45px;
+            border-top: 3px solid #c8102e;
+            background-color: #fafafa;
+            text-align: center;
+        }
+
+        .bottom-badge-img {
+            width: 115px;
+            height: 115px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .bottom-official-text {
+            padding: 0 15px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 13px;
+            font-weight: bold;
+            color: #333333;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        /* 分頁切換控制 */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 返回主海報按鈕 */
+        .back-btn {
+            display: inline-block;
+            background-color: #111111;
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #c8102e;
+        }
+
+        /* 六張 Mugshot 單欄直排（適配橫向長方形照片） */
+        .mugshot-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            margin-top: 24px;
+        }
+
+        .mugshot-card {
+            border: 2px solid #222;
+            padding: 14px;
+            background-color: #fafafa;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .mugshot-card:hover {
+            transform: translateY(-3px);
+            border-color: #c8102e;
+            background-color: #fff5f6;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .mugshot-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .mugshot-caption {
+            padding-top: 12px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 15px;
+            font-weight: bold;
+            color: #111;
+            display: flex;
+            justify-content: space-between;
+            letter-spacing: 0.8px;
+        }
+
+        /* 單張證據獨立分頁樣式（大尺寸展示） */
+        .single-evidence-header {
+            border-top: 3px solid #c8102e;
+            border-bottom: 3px solid #c8102e;
+            padding: 14px 10px;
+            margin: 10px 0 22px 0;
+            text-align: center;
+            background-color: #fffafa;
+        }
+
+        .single-evidence-title {
+            color: #c8102e;
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .single-evidence-sub {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 13px;
+            color: #444;
+            margin-top: 6px;
+            font-weight: bold;
+        }
+
+        /* 放大單張照片展示區 */
+        .single-photo-frame {
+            border: 3px solid #111111;
+            padding: 6px;
+            background-color: #111111;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+            margin-bottom: 20px;
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+
+        .single-photo-frame img {
+            width: 100%;
+            height: auto;
+            max-height: 920px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* 單張照片下方的獨白 Caption 框 */
+        .evidence-monologue {
+            border-left: 4px solid #c8102e;
+            background-color: #f8f8f8;
+            padding: 18px 24px;
+            margin: 0 -15px 25px -15px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 21px;
+            font-style: italic;
+            font-weight: bold;
+            color: #111111;
+            text-align: center;
+            line-height: 1.5;
+            letter-spacing: 0.3px;
+        }
+
+        .evidence-nav-bar {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .evidence-step-btn {
+            background-color: #f0f0f0;
+            color: #111111;
+            border: 1.5px solid #222222;
+            padding: 12px 18px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .evidence-step-btn:hover {
+            background-color: #c8102e;
+            color: #ffffff;
+            border-color: #c8102e;
+        }
+
+        /* 檔案規格表格 */
+        .dossier-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 14px;
+        }
+
+        .dossier-table th, .dossier-table td {
+            border: 1px solid #333;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .dossier-table th {
+            background-color: #f0f0f0;
+            width: 32%;
+            text-transform: uppercase;
+        }
+
+        /* 右下角超巨型視覺干擾假廣告組 */
+        .fake-ad-stack {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 950;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 500px;
+            max-width: calc(100vw - 24px);
+        }
+
+        .fake-ad-banner {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+            height: 104px;
+            background-color: #f2f2f2;
+            border-radius: 14px;
+            box-shadow: 0 10px 32px rgba(0, 0, 0, 0.8);
+            border: 1.5px solid #cccccc;
+            overflow: hidden;
+            text-decoration: none;
+            color: #111111;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang HK", "Microsoft JhengHei", Arial, sans-serif;
+            transition: transform 0.15s ease;
+            cursor: pointer;
+        }
+
+        .fake-ad-banner:hover {
+            transform: scale(1.015);
+            background-color: #ffffff;
+        }
+
+        .fake-ad-img {
+            width: 104px;
+            height: 104px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background-color: #ddd;
+        }
+
+        .fake-ad-content {
+            flex-grow: 1;
+            padding: 14px 48px 14px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .fake-ad-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: #111111;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .fake-ad-body {
+            font-size: 18px;
+            font-weight: 500;
+            color: #222222;
+            line-height: 1.3;
+        }
+
+        .fake-ad-tag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #9cc97f;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 2px 9px;
+            border-bottom-left-radius: 6px;
+            line-height: 1.3;
+        }
+
+        .fake-ad-close {
+            position: absolute;
+            right: 16px;
+            top: 56%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #666666;
+            font-weight: normal;
+            line-height: 1;
+            padding: 6px;
+        }
+
+        .fake-ad-banner:hover .fake-ad-close {
+            color: #111111;
+        }
+
+        /* 手機版適配 */
+        @media (max-width: 600px) {
+            .wanted-title { font-size: 50px; }
+            .badge-img { width: 78px; height: 78px; }
+            .bottom-badge-img { width: 72px; height: 72px; }
+            .global-bottom-logos { padding: 18px 20px; }
+            .content-body { padding: 20px; }
+            .single-photo-frame, .evidence-monologue { margin-left: 0; margin-right: 0; }
+            .evidence-monologue { font-size: 18px; padding: 14px 16px; }
+            .single-evidence-title { font-size: 22px; }
+            .fake-ad-stack {
+                bottom: 12px;
+                right: 12px;
+                gap: 10px;
+                width: calc(100vw - 24px);
+            }
+            .fake-ad-banner {
+                height: 86px;
+            }
+            .fake-ad-img {
+                width: 86px;
+                height: 86px;
+            }
+            .fake-ad-title { font-size: 16px; }
+            .fake-ad-body { font-size: 15px; }
+            .fake-ad-close { font-size: 20px; right: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="poster-container">
+    <!-- 頂部紅色通緝令標頭（機構名稱：IDPY） -->
+    <header class="header-banner">
+        <img src="seal-left.png" alt="IDPY Official Seal" class="badge-img" onerror="this.style.visibility='hidden'">
+        <div class="header-text">
+            <h1 class="wanted-title">WANTED</h1>
+            <div class="sub-banner">BY IDPY — I DON'T PROUD OF YOU</div>
+        </div>
+        <img src="badge-right.png" alt="IDPY Department Badge" class="badge-img" onerror="this.style.visibility='hidden'">
+    </header>
+
+    <div class="content-body">
+
+        <!-- ==================== 1. 首頁 (MAIN POSTER) ==================== -->
+        <main id="page-home" class="page-section active">
+            <!-- 黑色神秘剪影（點擊亦可直接進入通緝照片） -->
+            <div class="silhouette-box" onclick="showPage('page-photos')" title="Click to view Mugshots">
+                <img src="silhouette.jpg" alt="Wanted Subject Silhouette">
+            </div>
+
+            <!-- 紅色分頁按鈕 1：通緝照片 -->
+            <button class="red-nav-btn" onclick="showPage('page-photos')">
+                WANTED PHOTOGRAPHS (EVIDENCE #01–06)
+            </button>
+            <div class="click-hint">[ CLICK TO INSPECT PHOTOGRAPHIC EVIDENCE ]</div>
+            <p class="description-text">
+                <strong>IDPY (I DON'T PROUD OF YOU)</strong> is currently launching a full-scale manhunt for an <strong>"unproud queer"</strong> who refuses to conform to family expectations and societal labels. Six composite booking photographs from multiple angles have been released below. If you have any information regarding this subject's whereabouts, please contact IDPY immediately—do not approach, as extreme beauty and unapologetic authenticity may cause severe traditional discomfort.
+            </p>
+
+            <!-- 紅色分頁按鈕 2：描述 -->
+            <button class="red-nav-btn" onclick="showPage('page-description')">
+                DESCRIPTION
+            </button>
+            <div class="click-hint">[ CLICK TO READ FULL ARTIST STATEMENT &amp; CONCEPT ]</div>
+            <p class="description-text">
+                <span class="quote-highlight">"If being a pretty girl is a crime, I will be sentenced to life imprisonment."</span> Subverting the celebratory spirit of June's Pride Month into <strong>IDPY ("I Don't Proud Of You")</strong>, this project exposes the heavy labels placed on transgender individuals—both by a public that presumes them "guilty" and by Asian parental expectations obsessed with continuing the bloodline.
+            </p>
+
+            <!-- 紅色分頁按鈕 3：REWARD（直接外部跳轉至 Trip.com） -->
+            <a href="https://www.trip.com" target="_blank" rel="noopener noreferrer" class="red-nav-btn">
+                REWARD
+            </a>
+            <div class="click-hint">[ CLICK TO CLAIM ESCAPE REWARD ]</div>
+            <p class="description-text">
+                A one-way ticket out of judgment and societal surveillance. Click above to depart from the jurisdiction of IDPY and seek a space where existence is no longer treated as a felony.
+            </p>
+
+            <!-- 底部海報標語 -->
+            <div class="footer-banner">
+                REPORT ANY SIGHTINGS TO <span class="footer-red" style="cursor:pointer;" onclick="showPage('page-photos')">WWW.IDPY.GOV</span><br>
+                OR ESCAPE THE GAZE TODAY
+            </div>
+        </main>
+
+        <!-- ==================== 2. 分頁：通緝照片總覽 ==================== -->
+        <section id="page-photos" class="page-section">
+            <button class="back-btn" onclick="showPage('page-home')">&larr; RETURN TO WANTED POSTER</button>
+            
+            <h2 style="color:#c8102e; text-align:center; text-transform:uppercase; margin-top:0;">
+                IDPY BOOKING ARCHIVE: COMPOSITE ANGLES
+            </h2>
+            <p class="description-text" style="text-align:center;">
+                Select any photographic file below to inspect the enlarged evidence record.
+            </p>
+
+            <div class="mugshot-grid">
+                <!-- 1. 前 (FRONT) -->
+                <div class="mugshot-card" onclick="showPage('page-evidence-1')">
+                    <img src="mugshot-1.jpg" alt="Evidence 1 Front">
+                    <div class="mugshot-caption"><span>EVIDENCE 1</span><span>FRONT &rarr;</span></div>
+                </div>
+                <!-- 2. 後 (BACK) -->
+                <div class="mugshot-card" onclick="showPage('page-evidence-2')">
+                    <img src="mugshot-2.jpg" alt="Evidence 2 Back">
+                    <div class="mugshot-caption"><span>EVIDENCE 2</span><span>BACK &rarr;</span></div>
+                </div>
+                <!-- 3. 左 (LEFT) -->
+                <div class="mugshot-card" onclick="showPage('page-evidence-3')">
+                    <img src="mugshot-3.jpg" alt="Evidence 3 Left">
+                    <div class="mugshot-caption"><span>EVIDENCE 3</span><span>LEFT &rarr;</span></div>
+                </div>
+                <!-- 4. 右 (RIGHT) -->
+                <div class="mugshot-card" onclick="showPage('page-evidence-4')">
+                    <img src="mugshot-4.jpg" alt="Evidence 4 Right">
+                    <div class="mugshot-caption"><span>EVIDENCE 4</span><span>RIGHT &rarr;</span></div>
+                </div>
+                <!-- 5. 上 (TOP) -->
+                <div class="mugshot-card" onclick="showPage('page-evidence-5')">
+                    <img src="mugshot-5.jpg" alt="Evidence 5 Top">
+                    <div class="mugshot-caption"><span>EVIDENCE 5</span><span>TOP &rarr;</span></div>
+                </div>
+                <!-- 6. 下 (BOTTOM) -->
+                <div class="mugshot-card" onclick="showPage('page-evidence-6')">
+                    <img src="mugshot-6.jpg" alt="Evidence 6 Bottom">
+                    <div class="mugshot-caption"><span>EVIDENCE 6</span><span>BOTTOM &rarr;</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 2.1 獨立分頁：EVIDENCE 1 FRONT ==================== -->
+        <section id="page-evidence-1" class="page-section">
+            <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
+            <div class="single-evidence-header">
+                <h2 class="single-evidence-title">EVIDENCE 1 — FRONT</h2>
+                <div class="single-evidence-sub">IDPY ARCHIVE FILE #01 // COMPOSITE BOOKING RECORD</div>
+            </div>
+            <div class="single-photo-frame">
+                <img src="mugshot-1.jpg" alt="Evidence 1 Front">
+            </div>
+            <div class="evidence-monologue">
+                "I look straight at you. How do you look at me?"
+            </div>
+            <div class="evidence-nav-bar">
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-6')">&larr; PREV: EVIDENCE 6</button>
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-2')">NEXT: EVIDENCE 2 &rarr;</button>
+            </div>
+        </section>
+
+        <!-- ==================== 2.2 獨立分頁：EVIDENCE 2 BACK ==================== -->
+        <section id="page-evidence-2" class="page-section">
+            <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
+            <div class="single-evidence-header">
+                <h2 class="single-evidence-title">EVIDENCE 2 — BACK</h2>
+                <div class="single-evidence-sub">IDPY ARCHIVE FILE #02 // COMPOSITE BOOKING RECORD</div>
+            </div>
+            <div class="single-photo-frame">
+                <img src="mugshot-2.jpg" alt="Evidence 2 Back">
+            </div>
+            <div class="evidence-monologue">
+                "Your gaze always drifts elsewhere when you look at me."
+            </div>
+            <div class="evidence-nav-bar">
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-1')">&larr; PREV: EVIDENCE 1</button>
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-3')">NEXT: EVIDENCE 3 &rarr;</button>
+            </div>
+        </section>
+
+        <!-- ==================== 2.3 獨立分頁：EVIDENCE 3 LEFT ==================== -->
+        <section id="page-evidence-3" class="page-section">
+            <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
+            <div class="single-evidence-header">
+                <h2 class="single-evidence-title">EVIDENCE 3 — LEFT</h2>
+                <div class="single-evidence-sub">IDPY ARCHIVE FILE #03 // COMPOSITE BOOKING RECORD</div>
+            </div>
+            <div class="single-photo-frame">
+                <img src="mugshot-3.jpg" alt="Evidence 3 Left">
+            </div>
+            <div class="evidence-monologue">
+                "I can hear... I can hear..."
+            </div>
+            <div class="evidence-nav-bar">
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-2')">&larr; PREV: EVIDENCE 2</button>
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-4')">NEXT: EVIDENCE 4 &rarr;</button>
+            </div>
+        </section>
+
+        <!-- ==================== 2.4 獨立分頁：EVIDENCE 4 RIGHT ==================== -->
+        <section id="page-evidence-4" class="page-section">
+            <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
+            <div class="single-evidence-header">
+                <h2 class="single-evidence-title">EVIDENCE 4 — RIGHT</h2>
+                <div class="single-evidence-sub">IDPY ARCHIVE FILE #04 // COMPOSITE BOOKING RECORD</div>
+            </div>
+            <div class="single-photo-frame">
+                <img src="mugshot-4.jpg" alt="Evidence 4 Right">
+            </div>
+            <div class="evidence-monologue">
+                "I talk to myself."
+            </div>
+            <div class="evidence-nav-bar">
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-3')">&larr; PREV: EVIDENCE 3</button>
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-5')">NEXT: EVIDENCE 5 &rarr;</button>
+            </div>
+        </section>
+
+        <!-- ==================== 2.5 獨立分頁：EVIDENCE 5 TOP ==================== -->
+        <section id="page-evidence-5" class="page-section">
+            <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
+            <div class="single-evidence-header">
+                <h2 class="single-evidence-title">EVIDENCE 5 — TOP</h2>
+                <div class="single-evidence-sub">IDPY ARCHIVE FILE #05 // COMPOSITE BOOKING RECORD</div>
+            </div>
+            <div class="single-photo-frame">
+                <img src="mugshot-5.jpg" alt="Evidence 5 Top">
+            </div>
+            <div class="evidence-monologue">
+                "I cannot speak."
+            </div>
+            <div class="evidence-nav-bar">
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-4')">&larr; PREV: EVIDENCE 4</button>
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-6')">NEXT: EVIDENCE 6 &rarr;</button>
+            </div>
+        </section>
+
+        <!-- ==================== 2.6 獨立分頁：EVIDENCE 6 BOTTOM ==================== -->
+        <section id="page-evidence-6" class="page-section">
+            <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
+            <div class="single-evidence-header">
+                <h2 class="single-evidence-title">EVIDENCE 6 — BOTTOM</h2>
+                <div class="single-evidence-sub">IDPY ARCHIVE FILE #06 // COMPOSITE BOOKING RECORD</div>
+            </div>
+            <div class="single-photo-frame">
+                <img src="mugshot-6.jpg" alt="Evidence 6 Bottom">
+            </div>
+            <div class="evidence-monologue">
+                "I am arrested."
+            </div>
+            <div class="evidence-nav-bar">
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-5')">&larr; PREV: EVIDENCE 5</button>
+                <button class="evidence-step-btn" onclick="showPage('page-evidence-1')">NEXT: EVIDENCE 1 &rarr;</button>
+            </div>
+        </section>
+
+        <!-- ==================== 3. 分頁：描述 (DESCRIPTION - 完整創作自述) ==================== -->
+        <section id="page-description" class="page-section">
+            <button class="back-btn" onclick="showPage('page-home')">&larr; RETURN TO WANTED POSTER</button>
+
+            <h2 style="color:#c8102e; text-align:center; text-transform:uppercase; margin-top:0;">
+                CASE DOSSIER &amp; ARTIST STATEMENT
+            </h2>
+
+            <table class="dossier-table">
+                <tr>
+                    <th>PROJECT TITLE</th>
+                    <td>If Being a Pretty Girl Is a Crime, I Will Be Sentenced to Life Imprisonment (如果靚女係罪，我將終身監禁)</td>
+                </tr>
+                <tr>
+                    <th>ISSUING AGENCY</th>
+                    <td><strong>IDPY</strong> (I Don't Proud Of You)</td>
+                </tr>
+                <tr>
+                    <th>CHARGE</th>
+                    <td>Failing to Fulfill Bloodline Expectations &amp; Refusing One-Dimensional Labels</td>
+                </tr>
+                <tr>
+                    <th>TECHNIQUE</th>
+                    <td>Multi-Angle Photography, Digital Compositing &amp; Color Grading (6 Works)</td>
+                </tr>
+            </table>
+
+            <h3 style="color:#c8102e; text-transform:uppercase;">1. From "Pride Month" to "IDPY" (I Don't Proud Of You)</h3>
+            <p class="description-text">
+                While June is celebrated globally as <strong>Pride Month</strong> for the queer community, the reality behind closed doors in many Asian households is the exact opposite. The fictional agency <strong>IDPY ("I Don't Proud Of You")</strong> is named after that familiar, crushing phrase Asian parents often use to suppress the next generation. When a child's gender identity diverges from traditional norms—especially when they cannot fulfill the heavy familial duty of <strong>continuing the bloodline</strong>—parental pride turns into silent disappointment and rejection. Paired with my model's reflection that transgender people are routinely <strong>"presumed guilty"</strong> by the public, IDPY embodies both familial suppression and societal policing.
+            </p>
+
+            <h3 style="color:#c8102e; text-transform:uppercase;">2. Beyond a Single Label: Multi-Angle Compositing &amp; Humanity</h3>
+            <p class="description-text">
+                In society, the label "transgender" is often weaponized as a heavy, suffocating tag—reducing a complex human being to a single aspect of their identity, viewed purely through a judgmental, scrutinizing lens. To challenge this, these six photographs were created by capturing the model from multiple distinct angles (Front, Back, Left, Right, Top, Bottom), followed by digital compositing and expressive color grading. By layering different perspectives and hues into each frame, the work insists that transgender individuals are not defined solely by their transness; they are full, multifaceted human beings with depth, emotion, and beauty that refuse to be flattened by a one-sided gaze.
+            </p>
+        </section>
+
+    </div>
+
+    <!-- ==================== 每頁最下方共用的雙 Logo 底部欄 ==================== -->
+    <footer class="global-bottom-logos">
+        <img src="seal-left.png" alt="IDPY Official Seal" class="bottom-badge-img" onerror="this.style.visibility='hidden'">
+        <div class="bottom-official-text">
+            OFFICIAL NOTICE ISSUED BY IDPY<br>
+            (I DON'T PROUD OF YOU)<br>
+            CASE FILE #TG-2026 // ALL RIGHTS RESERVED
+        </div>
+        <img src="badge-right.png" alt="IDPY Department Badge" class="bottom-badge-img" onerror="this.style.visibility='hidden'">
+    </footer>
+</div>
+
+<!-- ==================== 右下角超巨型雙層假釣魚廣告 (點擊任何位置包含關閉按鈕皆跳轉 Agoda) ==================== -->
+<div class="fake-ad-stack">
+    <!-- 第一條 -->
+    <a href="https://www.agoda.com" target="_blank" rel="noopener noreferrer" class="fake-ad-banner" title="Advertisement">
+        <img src="aaron-kwok.jpg" alt="Ad Thumbnail 1" class="fake-ad-img">
+        <div class="fake-ad-content">
+            <div class="fake-ad-title">Ad · 突發新聞</div>
+            <div class="fake-ad-body">郭富城失去了一切...</div>
+        </div>
+        <span class="fake-ad-tag">Ad</span>
+        <span class="fake-ad-close" aria-label="Close ad">&#10005;</span>
+    </a>
+
+    <!-- 第二條 -->
+    <a href="https://www.agoda.com" target="_blank" rel="noopener noreferrer" class="fake-ad-banner" title="Advertisement">
+        <img src="aaron-kwok.jpg" alt="Ad Thumbnail 2" class="fake-ad-img">
+        <div class="fake-ad-content">
+            <div class="fake-ad-title">Ad · 突發新聞</div>
+            <div class="fake-ad-body">郭富城的家人證實了這一消息。</div>
+        </div>
+        <span class="fake-ad-tag">Ad</span>
+        <span class="fake-ad-close" aria-label="Close ad">&#10005;</span>
+    </a>
+</div>
+
+<script>
+    // 切換分頁函數
+    function showPage(pageId) {
+        const pages = document.querySelectorAll('.page-section');
+        pages.forEach(page => page.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
