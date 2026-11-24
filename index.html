@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WANTED - IDPY (I DON'T PROUD OF YOU)</title>
     <style>
-        /* 整體網頁背景：模擬官方檔案的深灰底色，突出中間的白紙海報 */
         body {
             background-color: #1c1c1c;
             font-family: Arial, Helvetica, sans-serif;
@@ -16,7 +15,6 @@
             color: #111111;
         }
 
-        /* 海報主容器 */
         .poster-container {
             background-color: #ffffff;
             width: 100%;
@@ -26,7 +24,6 @@
             overflow: hidden;
         }
 
-        /* 頂部紅色橫幅 */
         .header-banner {
             background-color: #c8102e;
             color: #ffffff;
@@ -37,7 +34,6 @@
             text-align: center;
         }
 
-        /* 頂部兩個 Logo 放大至 130px */
         .badge-img {
             width: 130px;
             height: 130px;
@@ -67,12 +63,10 @@
             text-transform: uppercase;
         }
 
-        /* 內容區域 */
         .content-body {
             padding: 30px 45px 35px 45px;
         }
 
-        /* 首頁黑色剪影框 */
         .silhouette-box {
             width: 260px;
             height: 310px;
@@ -95,7 +89,6 @@
             object-fit: cover;
         }
 
-        /* 紅色可點擊分頁按鈕 */
         .red-nav-btn {
             display: block;
             width: 100%;
@@ -132,7 +125,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* 黑色內文描述 */
         .description-text {
             font-size: 15px;
             line-height: 1.65;
@@ -146,7 +138,6 @@
             font-style: italic;
         }
 
-        /* 首頁底部呼籲欄 */
         .footer-banner {
             margin-top: 35px;
             padding-top: 20px;
@@ -162,7 +153,6 @@
             color: #c8102e;
         }
 
-        /* 每頁最下方共用的雙 Logo 底部欄 */
         .global-bottom-logos {
             display: flex;
             align-items: center;
@@ -190,7 +180,6 @@
             text-transform: uppercase;
         }
 
-        /* 分頁切換控制 */
         .page-section {
             display: none;
             animation: fadeIn 0.25s ease-in-out;
@@ -205,7 +194,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 返回主海報按鈕 */
         .back-btn {
             display: inline-block;
             background-color: #111111;
@@ -225,7 +213,6 @@
             background-color: #c8102e;
         }
 
-        /* 六張 Mugshot 單欄直排（適配橫向長方形照片） */
         .mugshot-grid {
             display: flex;
             flex-direction: column;
@@ -266,7 +253,6 @@
             letter-spacing: 0.8px;
         }
 
-        /* 單張證據獨立分頁樣式（大尺寸展示） */
         .single-evidence-header {
             border-top: 3px solid #c8102e;
             border-bottom: 3px solid #c8102e;
@@ -293,7 +279,6 @@
             font-weight: bold;
         }
 
-        /* 放大單張照片展示區 */
         .single-photo-frame {
             border: 3px solid #111111;
             padding: 6px;
@@ -313,7 +298,6 @@
             margin: 0 auto;
         }
 
-        /* 單張照片下方的獨白 Caption 框 */
         .evidence-monologue {
             border-left: 4px solid #c8102e;
             background-color: #f8f8f8;
@@ -355,7 +339,6 @@
             border-color: #c8102e;
         }
 
-        /* 檔案規格表格 */
         .dossier-table {
             width: 100%;
             border-collapse: collapse;
@@ -376,7 +359,6 @@
             text-transform: uppercase;
         }
 
-        /* 右下角超巨型視覺干擾假廣告組 */
         .fake-ad-stack {
             position: fixed;
             bottom: 24px;
@@ -472,7 +454,6 @@
             color: #111111;
         }
 
-        /* 手機版適配 */
         @media (max-width: 600px) {
             .wanted-title { font-size: 50px; }
             .badge-img { width: 78px; height: 78px; }
@@ -504,7 +485,6 @@
 <body>
 
 <div class="poster-container">
-    <!-- 頂部紅色通緝令標頭（機構名稱：IDPY） -->
     <header class="header-banner">
         <img src="seal-left.png" alt="IDPY Official Seal" class="badge-img" onerror="this.style.visibility='hidden'">
         <div class="header-text">
@@ -516,14 +496,11 @@
 
     <div class="content-body">
 
-        <!-- ==================== 1. 首頁 (MAIN POSTER) ==================== -->
         <main id="page-home" class="page-section active">
-            <!-- 黑色神秘剪影（點擊亦可直接進入通緝照片） -->
             <div class="silhouette-box" onclick="showPage('page-photos')" title="Click to view Mugshots">
                 <img src="silhouette.jpg" alt="Wanted Subject Silhouette">
             </div>
 
-            <!-- 紅色分頁按鈕 1：通緝照片 -->
             <button class="red-nav-btn" onclick="showPage('page-photos')">
                 WANTED PHOTOGRAPHS (EVIDENCE #01–06)
             </button>
@@ -532,7 +509,6 @@
                 <strong>IDPY (I DON'T PROUD OF YOU)</strong> is currently launching a full-scale manhunt for an <strong>"unproud queer"</strong> who refuses to conform to family expectations and societal labels. Six composite booking photographs from multiple angles have been released below. If you have any information regarding this subject's whereabouts, please contact IDPY immediately—do not approach, as extreme beauty and unapologetic authenticity may cause severe traditional discomfort.
             </p>
 
-            <!-- 紅色分頁按鈕 2：描述 -->
             <button class="red-nav-btn" onclick="showPage('page-description')">
                 DESCRIPTION
             </button>
@@ -541,7 +517,6 @@
                 <span class="quote-highlight">"If being a pretty girl is a crime, I will be sentenced to life imprisonment."</span> Subverting the celebratory spirit of June's Pride Month into <strong>IDPY ("I Don't Proud Of You")</strong>, this project exposes the heavy labels placed on transgender individuals—both by a public that presumes them "guilty" and by Asian parental expectations obsessed with continuing the bloodline.
             </p>
 
-            <!-- 紅色分頁按鈕 3：REWARD（直接外部跳轉至 Trip.com） -->
             <a href="https://www.trip.com" target="_blank" rel="noopener noreferrer" class="red-nav-btn">
                 REWARD
             </a>
@@ -550,14 +525,12 @@
                 A one-way ticket out of judgment and societal surveillance. Click above to depart from the jurisdiction of IDPY and seek a space where existence is no longer treated as a felony.
             </p>
 
-            <!-- 底部海報標語 -->
             <div class="footer-banner">
                 REPORT ANY SIGHTINGS TO <span class="footer-red" style="cursor:pointer;" onclick="showPage('page-photos')">WWW.IDPY.GOV</span><br>
                 OR ESCAPE THE GAZE TODAY
             </div>
         </main>
 
-        <!-- ==================== 2. 分頁：通緝照片總覽 ==================== -->
         <section id="page-photos" class="page-section">
             <button class="back-btn" onclick="showPage('page-home')">&larr; RETURN TO WANTED POSTER</button>
             
@@ -569,32 +542,26 @@
             </p>
 
             <div class="mugshot-grid">
-                <!-- 1. 前 (FRONT) -->
                 <div class="mugshot-card" onclick="showPage('page-evidence-1')">
                     <img src="mugshot-1.jpg" alt="Evidence 1 Front">
                     <div class="mugshot-caption"><span>EVIDENCE 1</span><span>FRONT &rarr;</span></div>
                 </div>
-                <!-- 2. 後 (BACK) -->
                 <div class="mugshot-card" onclick="showPage('page-evidence-2')">
                     <img src="mugshot-2.jpg" alt="Evidence 2 Back">
                     <div class="mugshot-caption"><span>EVIDENCE 2</span><span>BACK &rarr;</span></div>
                 </div>
-                <!-- 3. 左 (LEFT) -->
                 <div class="mugshot-card" onclick="showPage('page-evidence-3')">
                     <img src="mugshot-3.jpg" alt="Evidence 3 Left">
                     <div class="mugshot-caption"><span>EVIDENCE 3</span><span>LEFT &rarr;</span></div>
                 </div>
-                <!-- 4. 右 (RIGHT) -->
                 <div class="mugshot-card" onclick="showPage('page-evidence-4')">
                     <img src="mugshot-4.jpg" alt="Evidence 4 Right">
                     <div class="mugshot-caption"><span>EVIDENCE 4</span><span>RIGHT &rarr;</span></div>
                 </div>
-                <!-- 5. 上 (TOP) -->
                 <div class="mugshot-card" onclick="showPage('page-evidence-5')">
                     <img src="mugshot-5.jpg" alt="Evidence 5 Top">
                     <div class="mugshot-caption"><span>EVIDENCE 5</span><span>TOP &rarr;</span></div>
                 </div>
-                <!-- 6. 下 (BOTTOM) -->
                 <div class="mugshot-card" onclick="showPage('page-evidence-6')">
                     <img src="mugshot-6.jpg" alt="Evidence 6 Bottom">
                     <div class="mugshot-caption"><span>EVIDENCE 6</span><span>BOTTOM &rarr;</span></div>
@@ -602,7 +569,6 @@
             </div>
         </section>
 
-        <!-- ==================== 2.1 獨立分頁：EVIDENCE 1 FRONT ==================== -->
         <section id="page-evidence-1" class="page-section">
             <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
             <div class="single-evidence-header">
@@ -621,7 +587,6 @@
             </div>
         </section>
 
-        <!-- ==================== 2.2 獨立分頁：EVIDENCE 2 BACK ==================== -->
         <section id="page-evidence-2" class="page-section">
             <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
             <div class="single-evidence-header">
@@ -640,7 +605,6 @@
             </div>
         </section>
 
-        <!-- ==================== 2.3 獨立分頁：EVIDENCE 3 LEFT ==================== -->
         <section id="page-evidence-3" class="page-section">
             <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
             <div class="single-evidence-header">
@@ -659,7 +623,6 @@
             </div>
         </section>
 
-        <!-- ==================== 2.4 獨立分頁：EVIDENCE 4 RIGHT ==================== -->
         <section id="page-evidence-4" class="page-section">
             <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
             <div class="single-evidence-header">
@@ -678,7 +641,6 @@
             </div>
         </section>
 
-        <!-- ==================== 2.5 獨立分頁：EVIDENCE 5 TOP ==================== -->
         <section id="page-evidence-5" class="page-section">
             <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
             <div class="single-evidence-header">
@@ -697,7 +659,6 @@
             </div>
         </section>
 
-        <!-- ==================== 2.6 獨立分頁：EVIDENCE 6 BOTTOM ==================== -->
         <section id="page-evidence-6" class="page-section">
             <button class="back-btn" onclick="showPage('page-photos')">&larr; RETURN TO ALL EVIDENCE</button>
             <div class="single-evidence-header">
@@ -716,7 +677,6 @@
             </div>
         </section>
 
-        <!-- ==================== 3. 分頁：描述 (DESCRIPTION - 完整創作自述) ==================== -->
         <section id="page-description" class="page-section">
             <button class="back-btn" onclick="showPage('page-home')">&larr; RETURN TO WANTED POSTER</button>
 
@@ -756,7 +716,6 @@
 
     </div>
 
-    <!-- ==================== 每頁最下方共用的雙 Logo 底部欄 ==================== -->
     <footer class="global-bottom-logos">
         <img src="seal-left.png" alt="IDPY Official Seal" class="bottom-badge-img" onerror="this.style.visibility='hidden'">
         <div class="bottom-official-text">
@@ -768,9 +727,7 @@
     </footer>
 </div>
 
-<!-- ==================== 右下角超巨型雙層假釣魚廣告 (點擊任何位置包含關閉按鈕皆跳轉 Agoda) ==================== -->
 <div class="fake-ad-stack">
-    <!-- 第一條 -->
     <a href="https://www.agoda.com" target="_blank" rel="noopener noreferrer" class="fake-ad-banner" title="Advertisement">
         <img src="aaron-kwok.jpg" alt="Ad Thumbnail 1" class="fake-ad-img">
         <div class="fake-ad-content">
@@ -781,7 +738,6 @@
         <span class="fake-ad-close" aria-label="Close ad">&#10005;</span>
     </a>
 
-    <!-- 第二條 -->
     <a href="https://www.agoda.com" target="_blank" rel="noopener noreferrer" class="fake-ad-banner" title="Advertisement">
         <img src="aaron-kwok.jpg" alt="Ad Thumbnail 2" class="fake-ad-img">
         <div class="fake-ad-content">
@@ -794,7 +750,6 @@
 </div>
 
 <script>
-    // 切換分頁函數
     function showPage(pageId) {
         const pages = document.querySelectorAll('.page-section');
         pages.forEach(page => page.classList.remove('active'));
